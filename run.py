@@ -15,7 +15,7 @@ import omniglot
 SUMMARY_INTERVAL = 10
 SAVE_INTERVAL = 100
 PRINT_INTERVAL = 10
-VAL_INTERVAL = PRINT_INTERVAL * 5
+VAL_INTERVAL = PRINT_INTERVAL * 10
 NUM_TEST_TASKS = 600
 
 from methods.protonet import ProtoNet
@@ -109,7 +109,7 @@ if __name__ == '__main__':
                         help='learning rate for the network')
     parser.add_argument('--batch_size', type=int, default=16,
                         help='number of tasks per outer-loop update')
-    parser.add_argument('--num_train_iterations', type=int, default=5000,
+    parser.add_argument('--num_train_iterations', type=int, default=15001,
                         help='number of outer-loop updates to train for')
     parser.add_argument('--test', default=False, action='store_true',
                         help='train or test')

@@ -90,7 +90,7 @@ class OmniglotDataset(dataset.Dataset):
             all_file_paths = glob.glob(
                 os.path.join(self._character_folders[class_idx], '*.png')
             )
-            sampled_file_paths = np.random.default_rng(0).choice(
+            sampled_file_paths = np.random.default_rng().choice(
                 all_file_paths,
                 size=self._num_support + self._num_query,
                 replace=False
@@ -131,7 +131,7 @@ class OmniglotSampler(sampler.Sampler):
 
     def __iter__(self):
         return (
-            np.random.default_rng(0).choice(
+            np.random.default_rng().choice(
                 self._split_idxs,
                 size=self._num_way,
                 replace=False
