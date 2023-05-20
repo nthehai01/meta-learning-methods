@@ -77,10 +77,9 @@ class ProtoNet:
         self._start_train_step = 0
 
 
-    def _compute_prototypes(self, images_support, labels_support):
+    @staticmethod
+    def _compute_prototypes(features_support, labels_support):
         classes, _ = torch.unique(labels_support).sort()
-
-        features_support = self._network(images_support)
 
         prototypes = []
         for c in classes:
@@ -146,7 +145,8 @@ class ProtoNet:
             # ********************************************************
             # TODO: finish implementing this method.
             # For a given task, compute the prototypes and the protonet loss.
-            prototypes, classes = self._compute_prototypes(images_support, labels_support)
+            features_support = self._network(images_support)
+            prototypes, classes = self._compute_prototypes(features_support, labels_support)
 
             _, accuracy_support = self._classify_feats(
                 images_support, 

@@ -14,6 +14,7 @@ NUM_TEST_TASKS = 600
 
 from methods.protonet import ProtoNet
 from methods.maml import MAML
+from methods.proto_maml import ProtoMAML
 
 
 def main(args):
@@ -37,8 +38,16 @@ def main(args):
             args.outer_lr,
             log_dir
         )
-    elif args.method == 'mamlprotonet':
-        pass
+    elif args.method == 'protomaml':
+        net = ProtoMAML(
+            args.num_way,
+            args.num_inner_steps,
+            args.inner_lr,
+            args.learn_inner_lrs,
+            args.outer_lr,
+            args.output_lr,
+            log_dir
+        )
     else:
         raise ValueError
 
@@ -115,6 +124,8 @@ if __name__ == '__main__':
                         help='whether to optimize inner-loop learning rates (for MAML-related only)')
     parser.add_argument('--outer_lr', type=float, default=0.001,
                         help='outer-loop learning rate (for MAML-related only)')
+    parser.add_argument('--output_lr', type=float, default=0.4,
+                        help='inner-loop learning rate initialization for output layer (for Proto-MAML only)')
     parser.add_argument('--learning_rate', type=float, default=0.001,
                         help='learning rate for the network (for ProtoNet-related only)')
     parser.add_argument('--batch_size', type=int, default=16,
