@@ -15,10 +15,9 @@ import util
 from methods import Backbone
 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-SUMMARY_INTERVAL = 10
 SAVE_INTERVAL = 100
 PRINT_INTERVAL = 10
-VAL_INTERVAL = PRINT_INTERVAL * 5
+VAL_INTERVAL = PRINT_INTERVAL * 10
 NUM_TEST_TASKS = 600
 
 

@@ -7,18 +7,13 @@ parent = os.path.dirname(current)
 sys.path.append(parent)
 
 import argparse
-
 from torch.utils import tensorboard
-
 import omniglot
 
-SUMMARY_INTERVAL = 10
-SAVE_INTERVAL = 100
-PRINT_INTERVAL = 10
-VAL_INTERVAL = PRINT_INTERVAL * 10
 NUM_TEST_TASKS = 600
 
 from methods.protonet import ProtoNet
+from methods.maml import MAML
 
 
 def main(args):
@@ -34,7 +29,14 @@ def main(args):
     if args.method == 'protonet':
         net = ProtoNet(args.learning_rate, log_dir)
     elif args.method == 'maml':
-        pass
+        net = MAML(
+            args.num_way,
+            args.num_inner_steps,
+            args.inner_lr,
+            args.learn_inner_lrs,
+            args.outer_lr,
+            log_dir
+        )
     elif args.method == 'mamlprotonet':
         pass
     else:
@@ -105,8 +107,16 @@ if __name__ == '__main__':
                         help='number of support examples per class in a task')
     parser.add_argument('--num_query', type=int, default=15,
                         help='number of query examples per class in a task')
+    parser.add_argument('--num_inner_steps', type=int, default=1,
+                        help='number of inner-loop updates (for MAML-related only)')
+    parser.add_argument('--inner_lr', type=float, default=0.4,
+                        help='inner-loop learning rate initialization (for MAML-related only)')
+    parser.add_argument('--learn_inner_lrs', default=False, action='store_true',
+                        help='whether to optimize inner-loop learning rates (for MAML-related only)')
+    parser.add_argument('--outer_lr', type=float, default=0.001,
+                        help='outer-loop learning rate (for MAML-related only)')
     parser.add_argument('--learning_rate', type=float, default=0.001,
-                        help='learning rate for the network')
+                        help='learning rate for the network (for ProtoNet-related only)')
     parser.add_argument('--batch_size', type=int, default=16,
                         help='number of tasks per outer-loop update')
     parser.add_argument('--num_train_iterations', type=int, default=15001,
