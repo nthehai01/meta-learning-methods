@@ -185,7 +185,7 @@ def get_omniglot_dataloader(
         dataset=OmniglotDataset(num_support, num_query),
         batch_size=batch_size,
         sampler=OmniglotSampler(split_idxs, num_way, num_tasks_per_epoch),
-        num_workers=8,
+        num_workers=2,
         collate_fn=identity,
         pin_memory=torch.cuda.is_available(),
         drop_last=True
